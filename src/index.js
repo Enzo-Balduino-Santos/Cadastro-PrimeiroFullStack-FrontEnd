@@ -10,8 +10,18 @@ const port = 3333
 
 app.use(cors())
 app.use(express.json())
+
 app.get("/", (request, response) => {
-    response.json(persons)
+    const searchCommand = "SELECT id, name, email, nickname FROM enzobalduinosantos_02tb"
+
+    database.query(searchCommand, (error, users) => {
+        if(error) {
+            console.log(error)
+            return
+        }
+
+        response.json(users)
+    })
 })
 
 app.post("/cadastrar", (request, response) => {
